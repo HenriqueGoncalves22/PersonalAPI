@@ -19,8 +19,9 @@ namespace PersonalApi.Models
         public DateTime? DataAcesso { get; set; }
 
         [NotMapped]//DataAnnotations
-        public string PasswordString { get; set; } = string.Empty;
-
+        public string PasswordString { get; set; } = string.Empty; 
+        public List<Violino> Violinos { get; set; }
+        = new List<Violino>();
         public string Perfil { get; set; } = string.Empty;
         public string? Email { get; set; }
     }

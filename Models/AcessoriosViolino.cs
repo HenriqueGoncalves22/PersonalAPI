@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using PersonalApi.Models.Enuns;
+using Microsoft.Identity.Client;
+using Microsoft.Net.Http.Headers;
+using PersonalApi.Models;
 
 namespace PersonalApi.Models
 {
     public class AcessoriosViolino
     {
-        public int Id { get; set; }
-        public string Modelo { get; set; } = string.Empty;
-        public string Marca { get; set; } = string.Empty;
-        public string Materiais { get; set; } = string.Empty;
-        public string Descricao { get; set; } = string.Empty;
-        public decimal Valor { get; set; }
-        public TipoAcessoriosEnum Acessorios { get; set;}
+        public int ViolinoId { get; set;}
+        public Violino Violino { get; set;} = null!;
+        public int AcessorioId { get; set; } 
+        public Acessorio acessorio { get; set;} = null!;
+
     }
 }
