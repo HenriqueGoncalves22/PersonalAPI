@@ -15,12 +15,10 @@ namespace PersonalApi.Models
         public string Marca { get; set; } = string.Empty;
         public string Materiais { get; set; } = string.Empty;
         public string Descricao { get; set; } = string.Empty;
-        public decimal Valor { get; set; }
+        public double Valor { get; set; }
         public int? UsuarioId { get; set; }
         [JsonIgnore]
         public Usuario? Usuario { get; set; }
-
-        public List<AcessoriosViolino> AcessoriosViolinos { get; set; } = [];
-
+        public List<Acessorio> Acessorios { get; set; } = [];
     }
 }

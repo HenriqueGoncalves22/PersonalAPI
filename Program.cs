@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PersonalApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,11 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
