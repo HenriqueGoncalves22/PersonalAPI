@@ -11,6 +11,7 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using PersonalApi.Data;
 using PersonalApi.Models.Enuns;
+using PersonalApi.Controllers;
 
 namespace PersonalApi.Controllers
 {
@@ -58,12 +59,12 @@ namespace PersonalApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSinle(int id)
+        public IActionResult GetSingle(int id)
         {
             return Ok(violinos.FirstOrDefault(vi => vi.Id == id));
         }
 
-        [HttpPost]
+        [HttpPost("NovoViolino")]
         public IActionResult AddViolino(Violino novoViolino)
         {
             violinos.Add(novoViolino);
@@ -80,7 +81,7 @@ namespace PersonalApi.Controllers
         [HttpGet("GetContagem")]
         public IActionResult GetQuantidade()
         {
-            return Ok("Qauntidade de violinos: " + violinos.Count);
+            return Ok("Quantidade de violinos: " + violinos.Count);
         }
 
         [HttpDelete("(id)")]

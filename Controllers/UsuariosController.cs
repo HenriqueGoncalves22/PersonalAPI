@@ -129,11 +129,10 @@ public async Task<IActionResult> GetSingle (int id)
 {
     try
     {
-       Violino? v = await _context.TB_VIOLINOS
-                .Include(ac=> ac.Acessorios)
-                .Include(us => us.Usuario)
-                .FirstOrDefaultAsync(pBusca => pBusca.Id == id);
-                return Ok(v);
+       Usuario? u = await _context.TB_USUARIOS
+                .Include(vi => vi.Violinos)
+                .FirstOrDefaultAsync(vi => vi.Id == id);
+                return Ok(u);
    }
    catch (System.Exception ex)
      {

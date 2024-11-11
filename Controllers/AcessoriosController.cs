@@ -4,6 +4,14 @@ using PersonalApi.Models.Enuns;
 using PersonalApi.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using System.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using PersonalApi.Utils;
+using PersonalApi.Controllers;
 
 namespace PersonalApi.Controllers
 {
@@ -12,7 +20,6 @@ namespace PersonalApi.Controllers
     public class AcessoriosController : ControllerBase
     {
         private readonly DataContext _context;
-
         public AcessoriosController(DataContext context)
         {
             _context = context;
@@ -48,15 +55,7 @@ namespace PersonalApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
-            try
-            {
-                List<Acessorio> lista = await _context.TB_ACESSORIOS.ToListAsync();
-                return Ok(lista);
-            }
-            catch (System.Exception ex)
-            {
-                return BadRequest(ex.Message + " - " + ex.InnerException);
-            }
+            return Ok(acessorios);
         }
 
         [HttpPost]

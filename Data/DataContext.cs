@@ -31,15 +31,15 @@ namespace PersonalApi.Data
             modelBuilder.Entity<Usuario>().ToTable("TB_USUARIOS");
 
             modelBuilder.Entity<Usuario>()
-            .HasMany(e => e.Violinos)
-            .WithOne(e => e.Usuario)
-            .HasForeignKey(e => e.UsuarioId)
+            .HasMany(v => v.Violinos)
+            .WithOne(u => u.Usuario)
+            .HasForeignKey(v => v.UsuarioId)
             .IsRequired(false);
 
             modelBuilder.Entity<Violino>()
-            .HasMany(e => e.Acessorios)
-            .WithOne(e => e.Violino)
-            .HasForeignKey(e => e.ViolinoId)
+            .HasMany(a => a.Acessorios)
+            .WithOne(v => v.Violino)
+            .HasForeignKey(a => a.ViolinoId)
             .IsRequired(false);
 
 
