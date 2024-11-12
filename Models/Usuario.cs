@@ -18,7 +18,7 @@ namespace PersonalApi.Models
         public double? Longitude { get; set; }
         public DateTime? DataAcesso { get; set; }
 
-        [NotMapped]//DataAnnotations
+        [NotMapped]
         public string PasswordString { get; set; } = string.Empty;
         public List<Violino> Violinos { get; set; }
         = new List<Violino>();

@@ -38,13 +38,12 @@ namespace PersonalApi.Controllers
             new Acessorio() {Id = 10, Nome ="Espelho", Marca = "Mavis", Modelo = "Ébano", Descricao = "Disponíveis nos tamanhos: 1/16, 1/8, 1/4, 1/2 e 3/4..." ,Materiais = "Madeira de Ébano", TipoAcessorios = TipoAcessoriosEnum.Espelho,Valor = 90.44 ,ViolinoId = 1}
         };
 
-        [HttpGet("{id}")] 
-        public async Task<IActionResult> GetSingle(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetSingle(int id)
         {
             try
             {
-                Acessorio a = await _context.TB_ACESSORIOS.FirstOrDefaultAsync(aBusca => aBusca.Id == id);
-                return Ok(a);
+                return Ok(acessorios.FirstOrDefault(ac => ac.Id == id));
             }
             catch (System.Exception ex)
             {
@@ -52,34 +51,35 @@ namespace PersonalApi.Controllers
             }
         }
 
+
         [HttpGet("GetAll")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             return Ok(acessorios);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add (Acessorio novoAcessorio)
+        public async Task<IActionResult> Add(Acessorio novoAcessorio)
         {
             try
-            {               
-                if(novoAcessorio.TipoAcessorios == 0)
-                  throw new Exception("O Acessório deve ser especificado!");
+            {
+                if (novoAcessorio.TipoAcessorios == 0)
+                    throw new Exception("O Acessório deve ser especificado!");
 
                 Violino? v = await _context.TB_VIOLINOS.FirstOrDefaultAsync(v => v.Id == novoAcessorio.ViolinoId);
-                
-                if(v == null)
+
+                if (v == null)
                     throw new Exception("Não existe violino com id informado.");
 
-                 Acessorio buscaAcessorio = await _context.TB_ACESSORIOS
-                 .FirstOrDefaultAsync(a => a.ViolinoId == novoAcessorio.ViolinoId);
+                Acessorio buscaAcessorio = await _context.TB_ACESSORIOS
+                .FirstOrDefaultAsync(a => a.ViolinoId == novoAcessorio.ViolinoId);
 
-                if(buscaAcessorio != null)
+                if (buscaAcessorio != null)
                     throw new Exception("O Violino selecionado já contém um acessório atribuído a ele.");
-                  
+
                 await _context.TB_ACESSORIOS.AddAsync(novoAcessorio);
                 await _context.SaveChangesAsync();
-                return Ok(novoAcessorio.Id);
+                return Ok(novoAcessorio);
             }
             catch (System.Exception ex)
             {
@@ -87,7 +87,7 @@ namespace PersonalApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Atualizar")]
         public async Task<IActionResult> Update(Acessorio novoAcessorio)
         {
             try

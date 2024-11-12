@@ -64,7 +64,7 @@ namespace PersonalApi.Controllers
             return Ok(violinos.FirstOrDefault(vi => vi.Id == id));
         }
 
-        [HttpPost("NovoViolino")]
+        [HttpPost]
         public IActionResult AddViolino(Violino novoViolino)
         {
             violinos.Add(novoViolino);
