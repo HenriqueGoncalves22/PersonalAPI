@@ -12,8 +12,8 @@ using PersonalApi.Data;
 namespace PersonalAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241110194737_MigracaoUsuario")]
-    partial class MigracaoUsuario
+    [Migration("20241201203656_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,13 +77,121 @@ namespace PersonalAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Descricao = "Produzido na Alemanha, utilizando os melhores materiais, a marca Pirastro é dominante no segmento de...",
+                            Descricao = "As cordas Mauro Calixto são indicadas para qualquer estilo musical e procuradas iniciantes...",
+                            Marca = "Mauro Calixto",
+                            Materiais = "Núcleo de fibra sintética e Revestimento em aço",
+                            Modelo = "Padrão",
+                            Nome = "Encordeamento",
+                            TipoAcessorios = 1,
+                            Valor = 52.0,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descricao = "Produzido na Alemanha se utilizando dos melhores materiais, a marca Pirastro é dominante no sergmento de...",
                             Marca = "Pirastro",
                             Materiais = "Resina Natural de Pinho",
                             Modelo = "CV-52",
                             Nome = "Breu",
                             TipoAcessorios = 2,
-                            Valor = 52.649999999999999,
+                            Valor = 54.649999999999999,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descricao = "A espaleira Lunnon new apresenta design mais anatômico, que proporciona conforto, segurança e flexibilidade...",
+                            Marca = "Lunnon",
+                            Materiais = "Plástico injetável",
+                            Modelo = "New",
+                            Nome = "Espaleira",
+                            TipoAcessorios = 3,
+                            Valor = 36.0,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descricao = "Produto Original da Fábrica, é necessário fazer furos e ajustes em um Luthier para que seja regulado em seu instrumento...",
+                            Marca = " NETO VIOLINOS",
+                            Materiais = "ÉBANO MESCLADO",
+                            Modelo = "KIT 04 CRAVELHAS TAMARINDO PREMIUM",
+                            Nome = "Cravelha",
+                            TipoAcessorios = 4,
+                            Valor = 48.950000000000003,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descricao = "Também pode ser chamado simplesmente de fixo, é uma peça que utilizamos para ajudar no momento de afinação...",
+                            Marca = "Mavis",
+                            Materiais = "Metal",
+                            Modelo = "Niquelado",
+                            Nome = "Microafinador",
+                            TipoAcessorios = 5,
+                            Valor = 9.3599999999999994,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Descricao = "A queixeira é um acessório que se encaixa no extremo do corpo do violino ou da viola de arco. É um peça essencial...",
+                            Marca = "Mavis",
+                            Materiais = "Madeira de Ébano",
+                            Modelo = "Ébano",
+                            Nome = "Queixeira",
+                            TipoAcessorios = 6,
+                            Valor = 84.200000000000003,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Descricao = "Disponíveis nos tamanhos:  1/10, 1/16, 1/4, 1/2, 3/4 e 4/4...",
+                            Marca = "Mavis",
+                            Materiais = "Madeira de Ébano",
+                            Modelo = "Ébano",
+                            Nome = "Estandarte",
+                            TipoAcessorios = 7,
+                            Valor = 50.939999999999998,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Descricao = "Cavalete fabricado com madeira Maple de ótima qualidade, com a finalidade de proporcionar ao músico uma maior precisão...",
+                            Marca = "Mavis",
+                            Materiais = "Madeira Mapple",
+                            Modelo = "Madeira Mapple Mavis",
+                            Nome = "Cavalete",
+                            TipoAcessorios = 8,
+                            Valor = 12.470000000000001,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Descricao = "Descubra a qualidade excepcional do Arco Para Violino Eagle 4/4 VWB-44R Crina Animal Natural...",
+                            Marca = "Eagle",
+                            Materiais = "Hardwood no formato Octogonal (oitavado), Crina animal natural, Talão de ébano com madre-pérola Olho París incrustada",
+                            Modelo = "VWB44R",
+                            Nome = "Arco",
+                            TipoAcessorios = 9,
+                            Valor = 89.099999999999994,
+                            ViolinoId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Descricao = "Disponíveis nos tamanhos: 1/16, 1/8, 1/4, 1/2 e 3/4...",
+                            Marca = "Mavis",
+                            Materiais = "Madeira de Ébano",
+                            Modelo = "Ébano",
+                            Nome = "Espelho",
+                            TipoAcessorios = 10,
+                            Valor = 90.439999999999998,
                             ViolinoId = 1
                         });
                 });
@@ -139,8 +247,8 @@ namespace PersonalAPI.Migrations
                             Email = "seuEmail@gmail.com",
                             Latitude = -23.520024100000001,
                             Longitude = -46.596497999999997,
-                            PasswordHash = new byte[] { 85, 254, 216, 190, 195, 155, 148, 189, 112, 203, 146, 158, 198, 176, 223, 174, 6, 66, 56, 64, 173, 106, 240, 126, 196, 150, 124, 106, 132, 206, 147, 227, 13, 123, 134, 20, 105, 191, 212, 54, 71, 134, 233, 192, 185, 142, 150, 1, 69, 246, 188, 254, 186, 79, 230, 211, 56, 229, 178, 117, 240, 187, 114, 71 },
-                            PasswordSalt = new byte[] { 38, 121, 119, 185, 173, 252, 57, 210, 31, 193, 91, 90, 231, 172, 76, 4, 203, 201, 224, 94, 169, 168, 233, 35, 225, 94, 246, 179, 35, 93, 121, 128, 81, 134, 102, 157, 219, 22, 169, 254, 191, 53, 132, 194, 143, 138, 42, 76, 250, 249, 237, 38, 131, 18, 122, 194, 150, 170, 217, 69, 184, 164, 74, 101, 174, 113, 6, 176, 6, 90, 163, 215, 205, 249, 73, 102, 197, 101, 134, 230, 134, 251, 49, 30, 135, 60, 16, 163, 28, 68, 45, 43, 82, 248, 215, 134, 28, 104, 91, 226, 10, 209, 123, 166, 125, 93, 74, 80, 235, 195, 92, 69, 249, 26, 100, 74, 152, 207, 107, 242, 244, 130, 192, 57, 88, 215, 193, 183 },
+                            PasswordHash = new byte[] { 70, 65, 222, 201, 180, 48, 91, 244, 49, 235, 141, 83, 185, 100, 31, 34, 55, 88, 84, 105, 8, 136, 250, 72, 10, 151, 3, 27, 189, 152, 43, 230, 242, 95, 231, 207, 178, 162, 21, 80, 20, 2, 83, 121, 119, 158, 15, 217, 239, 250, 5, 136, 57, 224, 54, 206, 246, 90, 216, 84, 107, 1, 55, 199 },
+                            PasswordSalt = new byte[] { 32, 62, 64, 103, 147, 235, 241, 186, 26, 231, 237, 92, 247, 248, 111, 182, 139, 220, 167, 170, 165, 91, 16, 38, 91, 67, 75, 74, 237, 128, 104, 230, 179, 217, 2, 244, 85, 81, 180, 173, 97, 19, 105, 197, 4, 50, 41, 113, 33, 146, 117, 40, 196, 215, 228, 201, 37, 75, 74, 53, 208, 34, 57, 194, 71, 181, 78, 229, 178, 18, 168, 1, 129, 172, 68, 87, 234, 89, 180, 154, 132, 176, 24, 38, 98, 227, 161, 100, 131, 247, 153, 139, 213, 234, 36, 187, 138, 164, 103, 69, 24, 189, 44, 120, 205, 38, 94, 8, 126, 59, 75, 9, 113, 235, 192, 76, 236, 78, 133, 106, 130, 27, 47, 172, 129, 149, 89, 251 },
                             Perfil = "Admin",
                             Username = "UsuarioAdmin"
                         });
