@@ -24,33 +24,31 @@ namespace PersonalApi.Controllers
         {
             _context = context;
         }
-        private static List<Violino> violinos = new List<Violino>()
-        {
-            new Violino() {Id = 1, Marca = "Eagles", Modelo = "CV-12", Descricao = "Queixeira, estandarte, cravelhas e botão: Ébano Encordoamento: M Calixto Arco de crina natural e madeira maçaranduba Estojo Gota  Ajuste Profissional (cavalete original, alma, pestana, cravelhas" ,Materiais = "Violino: Abeto e Atiro.  Ébano Arco:Maçaranduba", Valor = 1283.85, UsuarioId = 1}
-
-        };
-        
-        [HttpGet("Get")]
-        public IActionResult GetFirst()
-        {
-            Violino V = violinos[0];
-            return Ok(V);
-        }
-        
-        [HttpGet("GetAll")]
-        public IActionResult Get()
-        {
-            return Ok(violinos);
-        }
-
-        [HttpGet("GetAcessorios")]
-        public async Task<IActionResult> GetAcessoriosAsync()
+  
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSingle(int id)
         {
             try
             {
-                List<Acessorio> acessorios = new List<Acessorio>();
-                acessorios = await _context.TB_ACESSORIOS.ToListAsync();
-                return Ok(acessorios);
+                Violino v = await _context.TB_VIOLINOS
+                .Include(ac => ac.Acessorios)
+                .FirstOrDefaultAsync(pBusca => pBusca.Id == id);
+
+                return Ok(v);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAll")]
+
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                List<Violino> lista = await _context.TB_VIOLINOS.ToListAsync();
+                return Ok(lista);
             }
             catch (System.Exception ex)
             {
@@ -58,37 +56,132 @@ namespace PersonalApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetSingle(int id)
-        {
-            return Ok(violinos.FirstOrDefault(vi => vi.Id == id));
-        }
-
         [HttpPost]
-        public IActionResult AddViolino(Violino novoViolino)
+        public async Task<IActionResult> Add(Violino novoViolino)
         {
-            violinos.Add(novoViolino);
-            return Ok(violinos);
+            try
+            {
+                await _context.TB_VIOLINOS.AddAsync(novoViolino);
+                await _context.SaveChangesAsync();
+
+                return Ok(novoViolino.Id);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(Violino novoViolino)
+        {
+            try
+            {
+                _context.TB_VIOLINOS.Update(novoViolino);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhasAfetadas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                Violino vRemover = await _context.TB_VIOLINOS.FirstOrDefaultAsync(v => v.Id == id);
+
+                _context.TB_VIOLINOS.Remove(vRemover);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhasAfetadas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet("GetOrdenado")]
-        public IActionResult GetOrdem()
+        [HttpGet("GetByLogin/{login}")]
+        public async Task<IActionResult> GetUsuario(string login)
         {
-            List<Violino> listaFinal = violinos.OrderBy(v => v.Valor).ToList();
-            return Ok(listaFinal);
+            try
+            {
+                //List exigirá o using System.Collections.Generic
+                Usuario usuario = await _context.TB_USUARIOS //Busca o usuário no banco através do login
+                .FirstOrDefaultAsync(x => x.Username.ToLower() == login.ToLower());
+                return Ok(usuario);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpGet("GetContagem")]
-        public IActionResult GetQuantidade()
+        //Método para alteração da geolocalização
+        [HttpPut("AtualizarLocalizacao")]
+        public async Task<IActionResult> AtualizarLocalizacao(Usuario u)
         {
-            return Ok("Quantidade de violinos: " + violinos.Count);
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS //Busca o usuário no banco através do Id
+                .FirstOrDefaultAsync(x => x.Id == u.Id);
+                usuario.Latitude = u.Latitude;
+                usuario.Longitude = u.Longitude;
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Latitude).IsModified = true;
+                attach.Property(x => x.Longitude).IsModified = true;
+                int linhasAfetadas = await _context.SaveChangesAsync(); //Confirma a alteração no banco
+                return Ok(linhasAfetadas); //Retorna as linhas afetadas (Geralmente sempre 1 linha msm)
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("(id)")]
-        public IActionResult Delete(int id)
+        [HttpPut("AtualizarEmail")]
+        public async Task<IActionResult> AtualizarEmail(Usuario u)
         {
-            violinos.RemoveAll(viol => viol.Id == id);
-            return Ok(violinos);
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS //Busca o usuário no banco através do Id
+                .FirstOrDefaultAsync(x => x.Id == u.Id);
+                usuario.Email = u.Email;
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Email).IsModified = true;
+                int linhasAfetadas = await _context.SaveChangesAsync(); //Confirma a alteração no banco
+                return Ok(linhasAfetadas); //Retorna as linhas afetadas (Geralmente sempre 1 linha msm)
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Método para alteração da foto
+        [HttpPut("AtualizarFoto")]
+        public async Task<IActionResult> AtualizarFoto(Usuario u)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                .FirstOrDefaultAsync(x => x.Id == u.Id);
+                usuario.Foto = u.Foto;
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Foto).IsModified = true;
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
